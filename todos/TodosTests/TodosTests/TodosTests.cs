@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Interactions;
@@ -10,35 +9,26 @@ using Xunit;
 
 namespace TodosTests
 {
-    public class HelloTodosTest
+    public class HelloTodosTest : IDisposable
     {
-        [Fact]
-        internal void AddTaskTest()
-        {
-            using IWebDriver driver = new ChromeDriver();
-            driver.Navigate().GoToUrl(@"http://todomvc.com/examples/angularjs/#/");
+        private readonly TodosPage page;
 
+        public HelloTodosTest()
+        {
+            page = new TodosPage();
+        }
+
+        [Fact]
+        internal void AddTaskWithPageObjectTest()
+        {
             string newTaskTitle = "testTask";
 
-            IWebElement newTaskInput = new WebDriverWait(driver, TimeSpan.FromSeconds(3))
-                .Until(drv => drv.FindElement(By.ClassName("new-todo")));
+            page.AddTask(newTaskTitle);
 
-            newTaskInput.SendKeys(newTaskTitle);
-            newTaskInput.SendKeys(Keys.Enter);
-
-            IWebElement taskList = new WebDriverWait(driver, TimeSpan.FromSeconds(3))
-                .Until(drv => drv.FindElement(By.ClassName("todo-list")));
-
-            IReadOnlyCollection<IWebElement> tasks = taskList.FindElements(By.TagName("li"));
-
-            IWebElement firstTask = tasks.First();
-
-            string firstTaskTitle = firstTask.FindElement(By.TagName("label")).Text;
-
-            string activeItemsCount = driver.FindElement(By.ClassName("todo-count")).FindElement(By.TagName("strong")).Text;
-
-            Assert.Equal(newTaskTitle, firstTaskTitle);
-            Assert.Equal(1, int.Parse(activeItemsCount));
+            IReadOnlyCollection<string> tasks = page.GetTasks();
+            int activeItemsCount = page.GetActiveTasksCount();
+            Assert.Equal(newTaskTitle, tasks.First());
+            Assert.Equal(1, activeItemsCount);
         }
 
         [Fact]
@@ -79,6 +69,12 @@ namespace TodosTests
             input.SendKeys(Keys.Enter);
 
             Assert.Equal(modifiedTaskTitle, firstTaskTitle.Text);
+        }
+
+        public void Dispose()
+        {
+            page?.Dispose();
+            GC.SuppressFinalize(this);
         }
     }
 }
