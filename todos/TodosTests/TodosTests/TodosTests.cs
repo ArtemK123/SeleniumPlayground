@@ -40,6 +40,21 @@ namespace TodosTests
             Assert.Equal(modifiedTaskTitle, actual);
         }
 
+        [Fact]
+        internal void RemoveTaskTest()
+        {
+            string task = "task";
+
+            page.AddTask("testing task");
+            page.AddTask(task);
+            int tasksCountOnPageBeforeAct = page.GetTasks().Count;
+
+            page.RemoveTask(task);
+
+            Assert.DoesNotContain(page.GetTasks(), shownTask => shownTask == task);
+            Assert.Equal(tasksCountOnPageBeforeAct - 1, page.GetActiveTasksCount());
+        }
+
         public void Dispose()
         {
             page?.Dispose();

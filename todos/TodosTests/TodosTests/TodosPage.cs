@@ -20,6 +20,17 @@ namespace TodosTests
             driver.Navigate().GoToUrl(@"http://todomvc.com/examples/angularjs/#/");
         }
 
+        public IReadOnlyCollection<string> GetTasks()
+            => GetTaskElements().Select(GetTaskElementText).ToList();
+
+        public int GetActiveTasksCount()
+        {
+            IWebElement activeTaskCountElement = new WebDriverWait(driver, TimeSpan.FromSeconds(DefaultWaitTimeoutSeconds))
+                .Until(drv => drv.FindElement(By.ClassName("todo-count")).FindElement(By.TagName("strong")));
+
+            return int.Parse(activeTaskCountElement.Text);
+        }
+
         public void AddTask(string title)
         {
             IWebElement newTaskInput = new WebDriverWait(driver, TimeSpan.FromSeconds(DefaultWaitTimeoutSeconds))
@@ -31,8 +42,7 @@ namespace TodosTests
 
         public void ModifyTask(string currentTitle, string newTitle)
         {
-            IReadOnlyCollection<IWebElement> taskElements = GetTaskElements();
-            IWebElement task = taskElements.First(taskElement => GetTaskElementText(taskElement) == currentTitle);
+            IWebElement task = GetTaskElement(currentTitle);
 
             Actions actions = new Actions(driver);
             actions.DoubleClick(task).Perform();
@@ -46,15 +56,17 @@ namespace TodosTests
             editInput.SendKeys(Keys.Enter);
         }
 
-        public IReadOnlyCollection<string> GetTasks()
-            => GetTaskElements().Select(GetTaskElementText).ToList();
-
-        public int GetActiveTasksCount()
+        public void RemoveTask(string taskTitle)
         {
-            IWebElement activeTaskCountElement = new WebDriverWait(driver, TimeSpan.FromSeconds(DefaultWaitTimeoutSeconds))
-                .Until(drv => drv.FindElement(By.ClassName("todo-count")).FindElement(By.TagName("strong")));
+            Actions actions = new Actions(driver);
+            IWebElement taskElement = GetTaskElement(taskTitle);
 
-            return int.Parse(activeTaskCountElement.Text);
+            actions.MoveToElement(taskElement);
+
+            IWebElement destroySubElement = taskElement.FindElement(By.ClassName("destroy"));
+            actions.MoveToElement(destroySubElement);
+            actions.Click();
+            actions.Perform();
         }
 
         public void Dispose()
@@ -71,6 +83,9 @@ namespace TodosTests
 
             return taskList.FindElements(By.TagName("li"));
         }
+
+        private IWebElement GetTaskElement(string taskTitle)
+            => GetTaskElements().First(taskElement => GetTaskElementText(taskElement) == taskTitle);
 
         private IWebElement GetCurrentEditInput()
             => new WebDriverWait(driver, TimeSpan.FromSeconds(3))
