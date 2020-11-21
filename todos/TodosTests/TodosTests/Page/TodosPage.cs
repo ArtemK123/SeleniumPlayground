@@ -56,10 +56,10 @@ namespace TodosTests.Page
             editInput.SendKeys(Keys.Enter);
         }
 
-        public void RemoveTask(string taskText)
+        public void RemoveTask(string taskTitle)
         {
             Actions actions = new Actions(driver);
-            IWebElement taskElement = GetTaskElement(taskText);
+            IWebElement taskElement = GetTaskElement(taskTitle);
 
             actions.MoveToElement(taskElement);
 
@@ -69,9 +69,11 @@ namespace TodosTests.Page
             actions.Perform();
         }
 
-        public void CompleteTask(string taskText)
+        public void CompleteTask(string taskTitle)
         {
-            throw new NotImplementedException();
+            IWebElement taskElement = GetTaskElement(taskTitle);
+            IWebElement completeToggle = taskElement.FindElement(By.ClassName("toggle"));
+            completeToggle.Click();
         }
 
         public void Dispose()
@@ -86,7 +88,7 @@ namespace TodosTests.Page
             => taskElement.FindElement(By.TagName("label")).Text;
 
         private static bool GetCompleteState(IWebElement taskElement)
-            => taskElement.FindElements(By.ClassName("ng-touched")).Any();
+            => taskElement.FindElements(By.ClassName("ng-dirty")).Any();
 
         private IReadOnlyCollection<IWebElement> GetTaskElements()
         {

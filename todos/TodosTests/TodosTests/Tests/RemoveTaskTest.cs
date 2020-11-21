@@ -9,9 +9,9 @@ namespace TodosTests.Tests
         internal void Test()
         {
             using TodosPage page = new TodosPage();
-            string taskTitle = "task";
+            string taskTitle = "testing task";
 
-            page.AddTask("testing task");
+            page.AddTask("mock task");
             page.AddTask(taskTitle);
             int tasksCountOnPageBeforeAct = page.GetTasks().Count;
 
