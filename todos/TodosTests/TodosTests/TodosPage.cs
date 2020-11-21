@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.UI;
 
 namespace TodosTests
@@ -28,15 +29,25 @@ namespace TodosTests
             newTaskInput.SendKeys(Keys.Enter);
         }
 
-        public IReadOnlyCollection<string> GetTasks()
+        public void ModifyTask(string currentTitle, string newTitle)
         {
-            IWebElement taskList = new WebDriverWait(driver, TimeSpan.FromSeconds(3))
-                .Until(drv => drv.FindElement(By.ClassName("todo-list")));
+            IReadOnlyCollection<IWebElement> taskElements = GetTaskElements();
+            IWebElement task = taskElements.First(taskElement => GetTaskElementText(taskElement) == currentTitle);
 
-            IReadOnlyCollection<IWebElement> tasks = taskList.FindElements(By.TagName("li"));
+            Actions actions = new Actions(driver);
+            actions.DoubleClick(task).Perform();
 
-            return tasks.Select(GetTaskTextFromLiTag).ToList();
+            IWebElement editInput = GetCurrentEditInput();
+
+            editInput.SendKeys(Keys.Control + "a");
+            editInput.SendKeys(Keys.Delete);
+
+            editInput.SendKeys(newTitle);
+            editInput.SendKeys(Keys.Enter);
         }
+
+        public IReadOnlyCollection<string> GetTasks()
+            => GetTaskElements().Select(GetTaskElementText).ToList();
 
         public int GetActiveTasksCount()
         {
@@ -51,6 +62,18 @@ namespace TodosTests
             driver?.Dispose();
         }
 
-        private static string GetTaskTextFromLiTag(IWebElement liTag) => liTag.FindElement(By.TagName("label")).Text;
+        private static string GetTaskElementText(IWebElement taskElement) => taskElement.FindElement(By.TagName("label")).Text;
+
+        private IReadOnlyCollection<IWebElement> GetTaskElements()
+        {
+            IWebElement taskList = new WebDriverWait(driver, TimeSpan.FromSeconds(3))
+                .Until(drv => drv.FindElement(By.ClassName("todo-list")));
+
+            return taskList.FindElements(By.TagName("li"));
+        }
+
+        private IWebElement GetCurrentEditInput()
+            => new WebDriverWait(driver, TimeSpan.FromSeconds(3))
+                .Until(drv => drv.FindElement(By.ClassName("edit")));
     }
 }

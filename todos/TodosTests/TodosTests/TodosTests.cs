@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Interactions;
-using OpenQA.Selenium.Support.UI;
 using Xunit;
 
 namespace TodosTests
@@ -19,7 +15,7 @@ namespace TodosTests
         }
 
         [Fact]
-        internal void AddTaskWithPageObjectTest()
+        internal void AddTaskTest()
         {
             string newTaskTitle = "testTask";
 
@@ -34,41 +30,14 @@ namespace TodosTests
         [Fact]
         internal void ModifyTaskTest()
         {
-            using IWebDriver driver = new ChromeDriver();
-            driver.Navigate().GoToUrl(@"http://todomvc.com/examples/angularjs/#/");
-
-            IWebElement newTaskInput = new WebDriverWait(driver, TimeSpan.FromSeconds(3))
-                .Until(drv => drv.FindElement(By.ClassName("new-todo")));
-
+            string taskTitle = "task";
             string modifiedTaskTitle = "modified";
 
-            newTaskInput.SendKeys("task1");
-            newTaskInput.SendKeys(Keys.Enter);
+            page.AddTask(taskTitle);
+            page.ModifyTask(taskTitle, modifiedTaskTitle);
 
-            IWebElement taskList = new WebDriverWait(driver, TimeSpan.FromSeconds(3))
-                .Until(drv => drv.FindElement(By.ClassName("todo-list")));
-
-            IReadOnlyCollection<IWebElement> tasks = taskList.FindElements(By.TagName("li"));
-
-            IWebElement firstTask = tasks.First();
-
-            IWebElement firstTaskTitle = firstTask.FindElement(By.TagName("label"));
-
-            Actions actions = new Actions(driver);
-            firstTask.Click();
-            firstTask.Click();
-            actions.DoubleClick(firstTask).Perform();
-
-            IWebElement input = new WebDriverWait(driver, TimeSpan.FromSeconds(3))
-                .Until(drv => drv.FindElement(By.ClassName("edit")));
-
-            input.SendKeys(Keys.Control + "a");
-            input.SendKeys(Keys.Delete);
-
-            input.SendKeys(modifiedTaskTitle);
-            input.SendKeys(Keys.Enter);
-
-            Assert.Equal(modifiedTaskTitle, firstTaskTitle.Text);
+            string actual = page.GetTasks().First();
+            Assert.Equal(modifiedTaskTitle, actual);
         }
 
         public void Dispose()
