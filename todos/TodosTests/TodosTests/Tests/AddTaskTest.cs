@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using TodosTests.Page;
 using Xunit;
 
-namespace TodosTests.TodosTests
+namespace TodosTests.Tests
 {
     public class AddTaskTest
     {
@@ -14,9 +15,9 @@ namespace TodosTests.TodosTests
 
             page.AddTask(newTaskTitle);
 
-            IReadOnlyCollection<string> tasks = page.GetTasks();
+            IReadOnlyCollection<TodoTask> tasks = page.GetTasks();
             int activeItemsCount = page.GetActiveTasksCount();
-            Assert.Equal(newTaskTitle, tasks.First());
+            Assert.Equal(newTaskTitle, tasks.First().Title);
             Assert.Equal(1, activeItemsCount);
         }
     }

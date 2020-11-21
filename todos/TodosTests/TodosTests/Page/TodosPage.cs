@@ -6,7 +6,7 @@ using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.UI;
 
-namespace TodosTests
+namespace TodosTests.Page
 {
     internal class TodosPage : IDisposable
     {
@@ -20,8 +20,8 @@ namespace TodosTests
             driver.Navigate().GoToUrl(@"http://todomvc.com/examples/angularjs/#/");
         }
 
-        public IReadOnlyCollection<string> GetTasks()
-            => GetTaskElements().Select(GetTaskElementText).ToList();
+        public IReadOnlyCollection<TodoTask> GetTasks()
+            => GetTaskElements().Select(GetTaskFromElement).ToList();
 
         public int GetActiveTasksCount()
         {
@@ -31,21 +31,21 @@ namespace TodosTests
             return int.Parse(activeTaskCountElement.Text);
         }
 
-        public void AddTask(string title)
+        public void AddTask(string taskTitle)
         {
             IWebElement newTaskInput = new WebDriverWait(driver, TimeSpan.FromSeconds(DefaultWaitTimeoutSeconds))
                 .Until(drv => drv.FindElement(By.ClassName("new-todo")));
 
-            newTaskInput.SendKeys(title);
+            newTaskInput.SendKeys(taskTitle);
             newTaskInput.SendKeys(Keys.Enter);
         }
 
-        public void ModifyTask(string currentTitle, string newTitle)
+        public void ModifyTask(string currentTaskTitle, string newTitle)
         {
-            IWebElement task = GetTaskElement(currentTitle);
+            IWebElement taskElement = GetTaskElement(currentTaskTitle);
 
             Actions actions = new Actions(driver);
-            actions.DoubleClick(task).Perform();
+            actions.DoubleClick(taskElement).Perform();
 
             IWebElement editInput = GetCurrentEditInput();
 
@@ -56,10 +56,10 @@ namespace TodosTests
             editInput.SendKeys(Keys.Enter);
         }
 
-        public void RemoveTask(string taskTitle)
+        public void RemoveTask(string taskText)
         {
             Actions actions = new Actions(driver);
-            IWebElement taskElement = GetTaskElement(taskTitle);
+            IWebElement taskElement = GetTaskElement(taskText);
 
             actions.MoveToElement(taskElement);
 
@@ -69,12 +69,24 @@ namespace TodosTests
             actions.Perform();
         }
 
+        public void CompleteTask(string taskText)
+        {
+            throw new NotImplementedException();
+        }
+
         public void Dispose()
         {
             driver?.Dispose();
         }
 
-        private static string GetTaskElementText(IWebElement taskElement) => taskElement.FindElement(By.TagName("label")).Text;
+        private static TodoTask GetTaskFromElement(IWebElement taskElement)
+            => new TodoTask(GetTaskElementText(taskElement), GetCompleteState(taskElement));
+
+        private static string GetTaskElementText(IWebElement taskElement)
+            => taskElement.FindElement(By.TagName("label")).Text;
+
+        private static bool GetCompleteState(IWebElement taskElement)
+            => taskElement.FindElements(By.ClassName("ng-touched")).Any();
 
         private IReadOnlyCollection<IWebElement> GetTaskElements()
         {

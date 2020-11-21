@@ -1,7 +1,8 @@
 ﻿using System.Linq;
+using TodosTests.Page;
 using Xunit;
 
-namespace TodosTests.TodosTests
+namespace TodosTests.Tests
 {
     public class ModifyTaskTest
     {
@@ -15,7 +16,7 @@ namespace TodosTests.TodosTests
             page.AddTask(taskTitle);
             page.ModifyTask(taskTitle, modifiedTaskTitle);
 
-            string actual = page.GetTasks().First();
+            string actual = page.GetTasks().First().Title;
             Assert.Equal(modifiedTaskTitle, actual);
         }
     }

@@ -1,6 +1,7 @@
-﻿using Xunit;
+﻿using TodosTests.Page;
+using Xunit;
 
-namespace TodosTests.TodosTests
+namespace TodosTests.Tests
 {
     public class RemoveTaskTest
     {
@@ -8,15 +9,15 @@ namespace TodosTests.TodosTests
         internal void Test()
         {
             using TodosPage page = new TodosPage();
-            string task = "task";
+            string taskTitle = "task";
 
             page.AddTask("testing task");
-            page.AddTask(task);
+            page.AddTask(taskTitle);
             int tasksCountOnPageBeforeAct = page.GetTasks().Count;
 
-            page.RemoveTask(task);
+            page.RemoveTask(taskTitle);
 
-            Assert.DoesNotContain(page.GetTasks(), shownTask => shownTask == task);
+            Assert.DoesNotContain(page.GetTasks(), shownTask => shownTask.Title == taskTitle);
             Assert.Equal(tasksCountOnPageBeforeAct - 1, page.GetActiveTasksCount());
         }
     }
