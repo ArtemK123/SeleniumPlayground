@@ -37,16 +37,24 @@ Complete task:
 		- "Items left" is decremented
 
 
-"Completed" and "Active" task lists:
+"Active" task list:
 	Arrange:
-		- Add 3 tasks to the list
+		- Add 5 tasks to the list
 		- Mark 2 tasks as "Completed"
 	Act:
-		1. Swith tab to "Completed"
-		2. Swith tab to "Active"
+		- Swith tab to "Active"
 	Assert:
-		1. Only completed tasks are shown in the list
-		2. Only the active task is shown in the list
+		- Only active tasks are shown in the list
+
+
+"Completed" task list:
+	Arrange:
+		- Add 5 tasks to the list
+		- Mark 2 tasks as "Completed"
+	Act:
+		- Swith tab to "Completed"
+	Assert:
+		- Only completed tasks are shown in the list
 
 
 Complete all with switcher:

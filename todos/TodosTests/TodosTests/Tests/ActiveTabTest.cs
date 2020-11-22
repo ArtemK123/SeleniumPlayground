@@ -5,7 +5,7 @@ using Xunit;
 
 namespace TodosTests.Tests
 {
-    public class CompletedTabTest
+    public class ActiveTabTest
     {
         [Fact]
         internal void Test()
@@ -25,12 +25,12 @@ namespace TodosTests.Tests
                 page.CompleteTask(taskToComplete);
             }
 
-            page.SelectTab(TodosTab.Completed);
+            page.SelectTab(TodosTab.Active);
 
             IReadOnlyCollection<TodoTask> shownTasks = page.GetTasks();
 
-            Assert.True(shownTasks.All(task => task.Completed));
-            Assert.Equal(completedTaskTitles, shownTasks.Select(task => task.Title).ToArray());
+            Assert.True(shownTasks.All(task => !task.Completed));
+            Assert.Equal(nonCompletedTaskTitles, shownTasks.Select(task => task.Title).ToArray());
         }
     }
 }
