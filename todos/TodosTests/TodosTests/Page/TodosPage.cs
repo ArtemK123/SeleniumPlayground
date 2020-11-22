@@ -78,12 +78,11 @@ namespace TodosTests.Page
             Actions actions = new Actions(driver);
             IWebElement taskElement = GetTaskElement(taskTitle);
 
-            actions.MoveToElement(taskElement);
+            actions.MoveToElement(taskElement).Perform();
 
             IWebElement destroySubElement = taskElement.FindElement(By.ClassName("destroy"));
             actions.MoveToElement(destroySubElement);
-            actions.Click();
-            actions.Perform();
+            actions.Click().Perform();
         }
 
         public void CompleteTask(string taskTitle)
