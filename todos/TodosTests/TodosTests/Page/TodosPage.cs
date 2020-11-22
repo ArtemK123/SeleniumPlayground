@@ -105,7 +105,7 @@ namespace TodosTests.Page
             => taskElement.FindElement(By.TagName("label")).Text;
 
         private static bool GetCompleteState(IWebElement taskElement)
-            => taskElement.FindElements(By.ClassName("ng-dirty")).Any();
+            => taskElement.GetAttribute("class").Split(' ').Contains("completed");
 
         private IReadOnlyCollection<IWebElement> GetTaskElements()
         {
