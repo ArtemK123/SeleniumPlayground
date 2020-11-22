@@ -31,6 +31,23 @@ namespace TodosTests.Page
             return int.Parse(activeTaskCountElement.Text);
         }
 
+        public TodosTab GetSelectedTab()
+        {
+            IWebElement selectedTabElement = GetSelectedTabElement();
+
+            return Enum.Parse<TodosTab>(selectedTabElement.Text);
+        }
+
+        public void SelectTab(TodosTab tab)
+        {
+            IReadOnlyCollection<IWebElement> tabLinkElements = new WebDriverWait(driver, TimeSpan.FromSeconds(3))
+                .Until(drv => drv.FindElement(By.ClassName("filters")))
+                .FindElements(By.TagName("a"));
+
+            IWebElement tabLink = tabLinkElements.First(linkElement => linkElement.Text == tab.ToString());
+            tabLink.Click();
+        }
+
         public void AddTask(string taskTitle)
         {
             IWebElement newTaskInput = new WebDriverWait(driver, TimeSpan.FromSeconds(DefaultWaitTimeoutSeconds))
@@ -104,5 +121,10 @@ namespace TodosTests.Page
         private IWebElement GetCurrentEditInput()
             => new WebDriverWait(driver, TimeSpan.FromSeconds(3))
                 .Until(drv => drv.FindElement(By.ClassName("edit")));
+
+        private IWebElement GetSelectedTabElement()
+            => new WebDriverWait(driver, TimeSpan.FromSeconds(3))
+                .Until(drv => drv.FindElement(By.ClassName("filters")))
+                .FindElement(By.ClassName("selected"));
     }
 }
