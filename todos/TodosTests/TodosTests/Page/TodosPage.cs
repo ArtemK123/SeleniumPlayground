@@ -93,6 +93,16 @@ namespace TodosTests.Page
             completeToggle.Click();
         }
 
+        public void CompleteAll()
+        {
+            IReadOnlyCollection<IWebElement> labelElements = new WebDriverWait(driver, TimeSpan.FromSeconds(DefaultWaitTimeoutSeconds))
+                .Until(drv => drv.FindElements(By.TagName("label")));
+
+            IWebElement labelForCompleteAllToggleElement = labelElements.First(labelElement => labelElement.GetAttribute("for") == "toggle-all");
+
+            labelForCompleteAllToggleElement.Click();
+        }
+
         public void Dispose()
         {
             driver?.Dispose();

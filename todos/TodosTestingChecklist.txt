@@ -57,6 +57,26 @@ Complete task:
 		- Only completed tasks are shown in the list
 
 
+"Complete all" make all completed:
+	Arrange:
+		- Add 3 tasks
+		- Mark one of them as "Completed"
+	Act:
+		- Click on "Complete all" switcher (near "What needs to be done" input)
+	Assert:
+		- All tasks are completed
+
+
+"Complete all" make all active:
+	Arrange:
+		- Add 3 tasks
+		- Mark all of them as "Completed"
+	Act:
+		- Click on "Complete all" switcher (near "What needs to be done" input)
+	Assert:
+		- All tasks are active
+
+
 Complete all with switcher:
 	Arrange:
 		- Add 3 tasks
