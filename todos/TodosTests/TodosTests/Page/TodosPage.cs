@@ -103,6 +103,14 @@ namespace TodosTests.Page
             labelForCompleteAllToggleElement.Click();
         }
 
+        public void ClearCompleted()
+        {
+            IWebElement clearCompletedButtonElement = new WebDriverWait(driver, TimeSpan.FromSeconds(DefaultWaitTimeoutSeconds))
+                .Until(drv => drv.FindElement(By.ClassName("clear-completed")));
+
+            clearCompletedButtonElement.Click();
+        }
+
         public void Dispose()
         {
             driver?.Dispose();
