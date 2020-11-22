@@ -1,0 +1,99 @@
+Todos testing checklist http://todomvc.com/examples/angularjs/#/
+
+Add task:
+	Act:
+		- Add new task
+	Assert:
+		- New task is added to the list
+		- "Items left" counter is incremented
+
+
+Modify task:
+	Arrange:
+		- Add at least one task to the list
+	Act:
+		- Modify the task
+	Assert:
+		- Task was modified
+
+		
+Remove task:
+	Arrange:
+		- Add at least one task to the list
+	Act:
+		- Remove the task from list
+	Assert:
+		- Removed task isn't shown in the list
+		- "Items left" is decremented
+
+
+Complete task:
+	Arrange:
+		- Add at least one task to the list
+	Act:
+		- Mark the task as completed
+	Assert:
+		- The task is marked as completed
+		- "Items left" is decremented
+
+
+"Active" task list:
+	Arrange:
+		- Add 5 tasks to the list
+		- Mark 2 tasks as "Completed"
+	Act:
+		- Swith tab to "Active"
+	Assert:
+		- Only active tasks are shown in the list
+
+
+"Completed" task list:
+	Arrange:
+		- Add 5 tasks to the list
+		- Mark 2 tasks as "Completed"
+	Act:
+		- Swith tab to "Completed"
+	Assert:
+		- Only completed tasks are shown in the list
+
+
+"Complete all" make all completed:
+	Arrange:
+		- Add 3 tasks
+		- Mark one of them as "Completed"
+	Act:
+		- Click on "Complete all" switcher (near "What needs to be done" input)
+	Assert:
+		- All tasks are completed
+
+
+"Complete all" make all active:
+	Arrange:
+		- Add 3 tasks
+		- Mark all of them as "Completed"
+	Act:
+		- Click on "Complete all" switcher (near "What needs to be done" input)
+	Assert:
+		- All tasks are active
+
+
+Complete all with switcher:
+	Arrange:
+		- Add 3 tasks
+		- Mark one of them as "Completed"
+	Act:
+		1. Click on switcher near "What needs to be done" input
+		2. Click on switcher again
+	Assert:
+		1. All tasks are completed
+		2. All tasks are active
+
+
+Clear completed:
+	Arrange:
+		- Add 3 tasks
+		- Mark two of them as "Completed"
+	Act:
+		- Click on "Clear completed"
+	Assert:
+		- All completed tasks are deleted

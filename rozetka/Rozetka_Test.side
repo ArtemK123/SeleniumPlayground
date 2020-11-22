@@ -1,0 +1,210 @@
+{
+  "id": "d3b3b21d-73ca-4502-86bf-8237768b5338",
+  "version": "2.0",
+  "name": "Rozetka_Test",
+  "url": "https://rozetka.com.ua/ua/",
+  "tests": [{
+    "id": "4ad7b03c-d9b6-4e19-9e3b-48bbed49890f",
+    "name": "SearchTest",
+    "commands": [{
+      "id": "b26d5ac2-4f76-4e9a-a20d-2f170b68a7e5",
+      "comment": "",
+      "command": "open",
+      "target": "https://rozetka.com.ua/ua/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "d0de2584-74d0-4bd2-a0f9-23bbdb7b554f",
+      "comment": "",
+      "command": "click",
+      "target": "name=search",
+      "targets": [
+        ["name=search", "name"],
+        ["css=.search-form__input", "css:finder"],
+        ["xpath=//input[@name='search']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "5ae4f77c-4a98-4b4e-b753-720b7662b277",
+      "comment": "",
+      "command": "type",
+      "target": "name=search",
+      "targets": [
+        ["name=search", "name"],
+        ["css=.search-form__input", "css:finder"],
+        ["xpath=//input[@name='search']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "Apple iPhone 11 128GB PRODUCT Red"
+    }, {
+      "id": "4d2930b5-98f3-40df-8dca-b054a16dbf56",
+      "comment": "",
+      "command": "sendKeys",
+      "target": "name=search",
+      "targets": [
+        ["name=search", "name"],
+        ["css=.search-form__input", "css:finder"],
+        ["xpath=//input[@name='search']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "${KEY_ENTER}"
+    }, {
+      "id": "f827f762-3641-469c-b9e0-1b62d4557470",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.catalog-grid__cell:nth-child(1) .goods-tile__title",
+      "targets": [
+        ["css=.catalog-grid__cell:nth-child(1) .goods-tile__title", "css:finder"],
+        ["xpath=//a[2]/span", "xpath:position"],
+        ["xpath=//span[contains(.,'Мобільний телефон Apple iPhone 11 128GB PRODUCT Red Офіційна гарантія')]", "xpath:innerText"]
+      ],
+      "value": "Мобільний телефон Apple iPhone 11 128GB PRODUCT Red Офіційна гарантія"
+    }]
+  }, {
+    "id": "a4febe8f-6517-4bd6-8775-94fdc3202b71",
+    "name": "CartTest",
+    "commands": [{
+      "id": "ceba4868-7eb6-41ab-8ff0-4b40b8d67788",
+      "comment": "",
+      "command": "open",
+      "target": "https://rozetka.com.ua/ua/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "aa9e501c-cd5a-415a-99a1-4430f87cb78a",
+      "comment": "",
+      "command": "//check search",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "33f6201c-f83a-49b0-b3f7-8767090435ed",
+      "comment": "",
+      "command": "click",
+      "target": "name=search",
+      "targets": [
+        ["name=search", "name"],
+        ["css=.search-form__input", "css:finder"],
+        ["xpath=//input[@name='search']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "4dd406b5-bc85-4636-97a0-bd0bd7ca5723",
+      "comment": "",
+      "command": "type",
+      "target": "name=search",
+      "targets": [
+        ["name=search", "name"],
+        ["css=.search-form__input", "css:finder"],
+        ["xpath=//input[@name='search']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "Apple iPhone 11 128GB PRODUCT Red"
+    }, {
+      "id": "b73c9518-6639-4461-b725-64ef4c60d0ab",
+      "comment": "",
+      "command": "sendKeys",
+      "target": "name=search",
+      "targets": [
+        ["name=search", "name"],
+        ["css=.search-form__input", "css:finder"],
+        ["xpath=//input[@name='search']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "${KEY_ENTER}"
+    }, {
+      "id": "a997e3c9-5ae0-413b-87d2-a54a11a878ab",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.catalog-grid__cell:nth-child(1) .goods-tile__title",
+      "targets": [
+        ["css=.catalog-grid__cell:nth-child(1) .goods-tile__title", "css:finder"],
+        ["xpath=//a[2]/span", "xpath:position"],
+        ["xpath=//span[contains(.,'Мобільний телефон Apple iPhone 11 128GB PRODUCT Red Офіційна гарантія')]", "xpath:innerText"]
+      ],
+      "value": "Мобільний телефон Apple iPhone 11 128GB PRODUCT Red Офіційна гарантія"
+    }, {
+      "id": "1cbf7afa-610b-489b-b88c-7b1b3a2fc98c",
+      "comment": "",
+      "command": "// check cart",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "9cf7ce51-b545-4756-a771-34e7d05ad0dc",
+      "comment": "",
+      "command": "click",
+      "target": "css=.header-actions__button_type_basket > svg",
+      "targets": [
+        ["css=.header-actions__button_type_basket > svg", "css:finder"]
+      ],
+      "value": ""
+    }, {
+      "id": "8f8b4b7c-3cc0-4d4b-b123-b270d9cb9135",
+      "comment": "",
+      "command": "click",
+      "target": "css=.buy-button > svg",
+      "targets": [
+        ["css=.buy-button > svg", "css:finder"]
+      ],
+      "value": ""
+    }, {
+      "id": "d9f10c20-3e5b-4228-9e4e-5d3ea55bef1d",
+      "comment": "",
+      "command": "assertText",
+      "target": "linkText=Мобільний телефон Apple iPhone 11 128GB PRODUCT Red Офіційна гарантія",
+      "targets": [
+        ["linkText=Мобільний телефон Apple iPhone 11 128GB PRODUCT Red Офіційна гарантія", "linkText"],
+        ["css=.cart-product__title", "css:finder"],
+        ["xpath=(//a[contains(text(),'Мобільний телефон Apple iPhone 11 128GB PRODUCT Red Офіційна гарантія')])[5]", "xpath:link"],
+        ["xpath=(//a[contains(@href, 'https://rozetka.com.ua/apple_iphone_11_128gb_red_mwlg2/p138132290/')])[22]", "xpath:href"],
+        ["xpath=//rz-cart-product/div/div/div[2]/a", "xpath:position"]
+      ],
+      "value": "Мобільний телефон Apple iPhone 11 128GB PRODUCT Red Офіційна гарантія"
+    }, {
+      "id": "09388abe-bbcc-49c6-a8f1-2c89c5eadf2f",
+      "comment": "",
+      "command": "// clear cart",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "902c5b68-a766-4f4a-8b9f-ed8d65f1b7ad",
+      "comment": "",
+      "command": "click",
+      "target": "id=cartProductActions0",
+      "targets": [
+        ["id=cartProductActions0", "id"],
+        ["css=#cartProductActions0", "css:finder"],
+        ["xpath=//button[@id='cartProductActions0']", "xpath:attributes"],
+        ["xpath=//rz-context-menu/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "8d8cd467-89c0-49ff-92b6-9c6936e96343",
+      "comment": "",
+      "command": "click",
+      "target": "css=.button--medium",
+      "targets": [
+        ["css=.button--medium", "css:finder"],
+        ["xpath=(//button[@type='button'])[34]", "xpath:attributes"],
+        ["xpath=//ul[@id='cartProductActions0']/li/rz-trash-icon/button", "xpath:idRelative"],
+        ["xpath=//rz-trash-icon/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Видалити')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }],
+  "suites": [{
+    "id": "9da212ea-295b-4b95-a04b-d02343b6936a",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": []
+  }],
+  "urls": ["https://rozetka.com.ua/", "https://rozetka.com.ua/ua/"],
+  "plugins": []
+}
